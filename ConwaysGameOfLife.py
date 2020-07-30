@@ -6,6 +6,7 @@ import module
 
 
 rotateRules = False
+randomize = False
 
 #Define Number of Columns
 columns = 159
@@ -41,8 +42,11 @@ screen = pygame.display.set_mode((window_width, window_height))
 
 pygame.display.set_caption('Conways Game of Life')
 
+if randomize:
+    module.StartRandom(cells_1, rows, columns)
+else:
+    module.StartSim(cells_1, rows, columns)
 
-module.StartSim(cells_1, rows, columns)
 module.RunSim(cells_1, cells_2, rows, columns)
 
 grid = []
@@ -88,8 +92,13 @@ while running:
             running = False  # Exit loop/ close pygame when x is clicked
         key=pygame.key.get_pressed()  #checking pressed keys
         if key[pygame.K_RETURN]: 
-            module.StartSim(cells_1, rows, columns)
-            module.StartSim(cells_2, rows, columns)
+            if randomize:
+                module.StartRandom(cells_1, rows, columns)
+                module.StartRandom(cells_2, rows, columns)
+            else:
+                module.StartSim(cells_1, rows, columns)
+                module.StartSim(cells_2, rows, columns)
+            
         if key[pygame.K_SPACE]:
             if pause: pause = False
             else: pause = True 
@@ -105,7 +114,7 @@ while running:
     # First iteration
 
 
-    if tick_count % 30 == 0 and not pause:
+    if tick_count % 15 == 0 and not pause:
         screen.fill(GREY)
         if interval % 2 == 1:
             module.RunSim(cells_1, cells_2, rows, columns)
@@ -142,7 +151,7 @@ while running:
             interval += 1
 
     #restart 
-    if module.checkCount(cells_2, rows, columns) < rows and module.checkCount(cells_1, rows, columns) < rows:
+    if module.checkCount(cells_2, rows, columns) < rows * 2 and module.checkCount(cells_1, rows, columns) < rows * 2:
         module.StartSim(cells_1, rows, columns)
 
     tick_count += 1

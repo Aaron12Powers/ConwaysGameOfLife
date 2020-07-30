@@ -1,3 +1,4 @@
+import random
 
 class Cell(object):
     def __init__(self, row, column):
@@ -7,15 +8,26 @@ class Cell(object):
         self.neighbors = 0
 
 #setup first cell of simulation
-def StartSim(oldCells, rows, columns):
+def StartSim(cells, rows, columns):
     for row in range(0, rows):
         for column in range(0, columns):
-            if oldCells[column][row].column != (columns // 2):
-                oldCells[column][row].color = 0
-            elif oldCells[column][row].row != 0:
-                oldCells[column][row].color = 1    
+            if cells[column][row].column != (columns // 2):
+                cells[column][row].color = 0
+            elif cells[column][row].row != 0:
+                cells[column][row].color = 1    
             else:
-                oldCells[column][row].color = 1
+                cells[column][row].color = 1
+
+
+def StartRandom(cells, rows, columns):
+    for row in range(0, rows):
+        for column in range(0, columns):
+            randomRoll = random.randint(0,100)
+            if randomRoll % 5 == 0:
+                cells[column][row].color = 1
+            else:
+                cells[column][row].color = 0
+
 
 def RunSim(oldCells, newCells, rows, columns):
     for row in range(0, rows):
