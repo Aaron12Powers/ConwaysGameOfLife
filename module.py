@@ -28,6 +28,11 @@ def StartRandom(cells, rows, columns):
             else:
                 cells[column][row].color = 0
 
+def StartBlank(cells, rows, columns):
+    for row in range(0, rows):
+        for column in range(0, columns):
+            cells[column][row].color = 0
+
 
 def RunSim(oldCells, newCells, rows, columns):
     for row in range(0, rows):
@@ -97,3 +102,17 @@ def checkCount(cells, rows, columns):
                 count += 1
     print(count)
     return count
+
+def FlipCell(cell_1, cell_2):
+    if cell_1.color == 0 and cell_2.color == 0:
+        cell_1.color = 1
+        cell_2.color = 1
+    elif cell_1.color == 0 and cell_2.color == 1:
+        cell_1.color = 1
+        cell_2.color = 0
+    elif cell_1.color == 1 and cell_2.color == 0:
+        cell_1.color = 0
+        cell_2.color = 1
+    elif cell_1.color == 1 and cell_2.color == 1:
+        cell_1.color = 0
+        cell_2.color = 0
